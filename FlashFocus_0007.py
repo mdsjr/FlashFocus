@@ -11,6 +11,8 @@ def encontrar_letra_central(palavra):
     return palavra[indice_meio]
 
 def exibir_palavras():
+    
+    
     texto = caixa_texto.get("1.0", tk.END).strip()
     palavras = texto.split()
 
@@ -25,14 +27,13 @@ def exibir_palavras():
         label_palavra.delete("1.0", tk.END)
 
         # Adiciona parte1
-        label_palavra.insert(tk.END, parte1)
+        label_palavra.insert(tk.END, parte1, "center")
 
-        # Adiciona a letra central com uma tag de formatação
-        label_palavra.insert(tk.END, letra_central, "central")
-
+        # Adiciona a letra central com a tag de formatação e centralização
+        label_palavra.insert(tk.END, letra_central, "central center")
 
         # Adiciona parte2
-        label_palavra.insert(tk.END, parte2)
+        label_palavra.insert(tk.END, parte2, "center")
 
         # Atualiza a exibição
         janela.update()
@@ -40,26 +41,25 @@ def exibir_palavras():
 
 # Cria a janela principal
 janela = tk.Tk()
-janela.title("Exibidor de Palavras")
+janela.title("Flash Focus")
 
-# Cria um widget Text para exibir as palavras
-label_palavra = tk.Text(janela, height=2, font=("Helvetica", 24))
+# Cria um widget Text para exibir as palavras com o anchor centralizado
+label_palavra = tk.Text(janela, height=2, font=("Helvetica", 24), )  
 label_palavra.pack(pady=20)
 
 # Configura a tag de formatação para a letra central
 label_palavra.tag_configure("central", font=("Helvetica", 24, "bold"), foreground="red")
 
 # Configura a tag para centralizar o texto
-label_palavra.tag_configure("center", justify='center')       
-        
-
+label_palavra.tag_configure("center", justify='center') 
 
 # Cria uma caixa de texto para inserir o texto
 caixa_texto = tk.Text(janela, height=5, width=30)
+caixa_texto.insert(tk.END, "Você pode ler mais rapido do que imagina!")
 caixa_texto.pack()
 
 # Cria um botão para iniciar a exibição
-botao_exibir = tk.Button(janela, text="Exibir Palavras", command=exibir_palavras)
+botao_exibir = tk.Button(janela, text="Flash!", command=exibir_palavras)
 botao_exibir.pack(pady=10)
 
 janela.mainloop()

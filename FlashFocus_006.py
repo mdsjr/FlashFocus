@@ -24,15 +24,14 @@ def exibir_palavras():
         # Limpa o conteúdo anterior do Text widget
         label_palavra.delete("1.0", tk.END)
 
-        # Adiciona parte1
-        label_palavra.insert(tk.END, parte1)
+        # Adiciona parte1 com a tag de centralização
+        label_palavra.insert(tk.END, parte1, "central center")
 
-        # Adiciona a letra central com uma tag de formatação
-        label_palavra.insert(tk.END, letra_central, "central")
+        # Adiciona a letra central com a tag de formatação e centralização
+        label_palavra.insert(tk.END, letra_central, "central center")
 
-
-        # Adiciona parte2
-        label_palavra.insert(tk.END, parte2)
+        # Adiciona parte2 com a tag de centralização
+        label_palavra.insert(tk.END, parte2, "central center")
 
         # Atualiza a exibição
         janela.update()
@@ -50,9 +49,7 @@ label_palavra.pack(pady=20)
 label_palavra.tag_configure("central", font=("Helvetica", 24, "bold"), foreground="red")
 
 # Configura a tag para centralizar o texto
-label_palavra.tag_configure("center", justify='center')       
-        
-
+label_palavra.tag_configure("center", justify='center') 
 
 # Cria uma caixa de texto para inserir o texto
 caixa_texto = tk.Text(janela, height=5, width=30)
