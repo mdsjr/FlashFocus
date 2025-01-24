@@ -1,8 +1,14 @@
 import time
-from tkinter import *
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import tkinter as tk
+
+# Configura o tema
+style = ttk.Style(theme="superhero")
+
+# Cria a janela principal com ttkbootstrap
+janela = ttk.Window(title="Flash Focus", themename="superhero")
+janela.state("zoomed")
 
 # Variável global para controlar o estado da exibição
 executando = False
@@ -66,17 +72,7 @@ def continuar():
 
 def ajustar_velocidade(value):
     global velocidade
-    # velocidade = float(value) / 1000  # Converte milissegundos para segundos
-    # Inverte o valor para que 100 seja lento e 1000 seja rápido
     velocidade = 1 - (float(value) - 100) / 900
-
-# Cria a janela principal
-janela = tk.Tk()
-janela.title("Flash Focus")
-janela.state("zoomed")
-#janela.attributes("-fullscreen", True)  # Inicia a janela em tela cheia
-# Sai do modo tela cheia com a tecla "Esc"
-#janela.bind("<Escape>", lambda e: janela.attributes("-fullscreen", False))
 
 # Cria um widget Text para exibir as palavras com o anchor centralizado
 label_palavra = tk.Text(janela, height=2, font=("Helvetica", 24))
@@ -89,30 +85,40 @@ label_palavra.tag_configure("central", font=("Helvetica", 24, "bold"), foregroun
 label_palavra.tag_configure("center", justify='center')
 
 # Cria uma caixa de texto para inserir o texto
-caixa_texto = tk.Text(janela, height=10, width=30)
+caixa_texto = ttk.Text(janela, height=10, width=50)
 caixa_texto.insert(tk.END, "Você pode ler mais rápido do que imagina!")
-caixa_texto.pack()
+caixa_texto.pack(pady=10)
+
+# Adiciona um rótulo para o controle deslizante
+label_velocidade = ttk.Label(janela, text="Velocidade", font=("Helvetica", 12, "bold"))
+label_velocidade.pack(pady=5)
 
 # Cria o controle deslizante para ajustar a velocidade de exibição
-slider_velocidade = tk.Scale(janela, from_=100, to=900, orient=HORIZONTAL, label="Velocidade", command=ajustar_velocidade)
+slider_velocidade = ttk.Scale(
+    janela, 
+    from_=100, 
+    to=900, 
+    orient=HORIZONTAL, 
+    command=ajustar_velocidade,
+    bootstyle="info"
+)
 slider_velocidade.set(700)  # Define uma velocidade média como padrão
 slider_velocidade.pack(pady=10)
-slider_velocidade.place(relx=0.5, rely=0.9, anchor="center")
 
 # Cria um frame para alinhar os botões lado a lado
-frame_botoes = tk.Frame(janela)
+frame_botoes = ttk.Frame(janela)
 frame_botoes.pack(pady=10)
 
 # Cria o botão para iniciar a exibição
-botao_iniciar = tk.Button(frame_botoes, text="Iniciar", command=iniciar)
+botao_iniciar = ttk.Button(frame_botoes, text="Iniciar", command=iniciar, bootstyle=SUCCESS)
 botao_iniciar.grid(row=0, column=0, padx=5)
 
 # Cria o botão para pausar a exibição
-botao_pausar = tk.Button(frame_botoes, text="Pausar", command=pausar)
+botao_pausar = ttk.Button(frame_botoes, text="Pausar", command=pausar, bootstyle=WARNING)
 botao_pausar.grid(row=0, column=1, padx=5)
 
 # Cria o botão para continuar a exibição
-botao_continuar = tk.Button(frame_botoes, text="Continuar", command=continuar)
+botao_continuar = ttk.Button(frame_botoes, text="Continuar", command=continuar, bootstyle=INFO)
 botao_continuar.grid(row=0, column=2, padx=5)
 
 janela.mainloop()

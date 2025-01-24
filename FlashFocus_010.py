@@ -1,8 +1,7 @@
 import time
 from tkinter import *
-import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
 import tkinter as tk
+from PIL import ImageTk, Image
 
 # Variável global para controlar o estado da exibição
 executando = False
@@ -70,23 +69,34 @@ def ajustar_velocidade(value):
     # Inverte o valor para que 100 seja lento e 1000 seja rápido
     velocidade = 1 - (float(value) - 100) / 900
 
+def centralizar(widget):
+    widget.pack(pady=10)  # Adiciona um espaçamento acima e abaixo do widget
+    widget.place(relx=0.5, anchor="center") # Centraliza o widget na janela
+
 # Cria a janela principal
 janela = tk.Tk()
 janela.title("Flash Focus")
+janela.config(bg="#0E1724")
 janela.state("zoomed")
-#janela.attributes("-fullscreen", True)  # Inicia a janela em tela cheia
-# Sai do modo tela cheia com a tecla "Esc"
-#janela.bind("<Escape>", lambda e: janela.attributes("-fullscreen", False))
+
+imagem = Image.open("logo.png")  # Substitua "sua_imagem.png" pelo caminho da sua imagem
+imagem_tk = ImageTk.PhotoImage(imagem)
+label_imagem = tk.Label(janela, image=imagem_tk, bg="#0E1724")
+
 
 # Cria um widget Text para exibir as palavras com o anchor centralizado
 label_palavra = tk.Text(janela, height=2, font=("Helvetica", 24))
 label_palavra.pack(pady=20)
 
+label_imagem.place(relx=0.5, rely=0.2, anchor="center")
+
 # Configura a tag de formatação para a letra central
-label_palavra.tag_configure("central", font=("Helvetica", 24, "bold"), foreground="red")
+label_palavra.tag_configure("central", font=("Helvetica", 24, "bold"), foreground="#FF0000")  # Vermelho puro
+
 
 # Configura a tag para centralizar o texto
-label_palavra.tag_configure("center", justify='center')
+label_palavra.tag_configure("center", justify='center', background="#E0FFFF")
+
 
 # Cria uma caixa de texto para inserir o texto
 caixa_texto = tk.Text(janela, height=10, width=30)
@@ -97,7 +107,6 @@ caixa_texto.pack()
 slider_velocidade = tk.Scale(janela, from_=100, to=900, orient=HORIZONTAL, label="Velocidade", command=ajustar_velocidade)
 slider_velocidade.set(700)  # Define uma velocidade média como padrão
 slider_velocidade.pack(pady=10)
-slider_velocidade.place(relx=0.5, rely=0.9, anchor="center")
 
 # Cria um frame para alinhar os botões lado a lado
 frame_botoes = tk.Frame(janela)
